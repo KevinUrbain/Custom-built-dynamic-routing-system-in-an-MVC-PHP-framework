@@ -1,4 +1,4 @@
-# Routeur PHP Fait Maison
+# Routeur PHP From Scratch
 
 Ce projet est un routeur PHP simple et léger, conçu pour illustrer les bases du pattern "Front Controller" et du routage en PHP orienté objet.
 
