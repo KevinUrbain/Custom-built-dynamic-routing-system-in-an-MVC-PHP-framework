@@ -34,7 +34,7 @@ Le routeur appellera donc la méthode `findById('123')` de la classe `UserContro
 
 Pour que le routeur fonctionne, le projet doit respecter la structure de dossiers suivante :
 
-```
+```text
 /
 ├── .htaccess
 ├── public/
@@ -104,114 +104,3 @@ class ProductController
 C'est tout ! Le routeur s'occupera du reste.
 
 ⚠️ Pas d'autoload implémenté, c'est pour cette raison que vous ne voyez pas les namespaces ni d'inclusion d'un fichier autoload.php (veuillez vous utiliser Composer pour cela)
-
---- English version
-
-# Homemade PHP Router
-
-This project is a simple and lightweight PHP router, designed to illustrate the basics of the "Front Controller" pattern and object-oriented PHP routing.
-
-## How it Works
-
-The router intercepts all requests thanks to a rewrite rule in the `.htaccess` file. The request is redirected to `public/index.php` which instantiates and runs the router.
-
-The router then parses the URL to determine which controller and method to call. The URL structure is as follows:
-
-`/controller/method/param1/param2/...`
-
-- **controller**: The name of the controller to call. If not specified, `HomeController` is used by default.
-- **method**: The name of the method to execute in the controller. If not specified, the `index()` method is used by default.
-- **param1, param2, ...**: The parameters to pass to the method.
-
-For example, the URL `/user/findById/123` will be processed as follows:
-
-1.  **Controller**: `user` -> `UserController`
-2.  **Method**: `findById`
-3.  **Parameter**: `123`
-
-The router will therefore call the `findById('123')` method of the `UserController` class.
-
-## Features
-
-- Routing based on URL segments.
-- Automatic loading of controllers (`/user` loads `UserController.php`).
-- Dynamic calling of controller methods.
-- Passing URL segments as parameters to methods.
-- Basic handling of 404 errors (controller, method, or file not found, insufficient number of parameters).
-
-## Architecture and .htaccess
-
-For the router to work, the project must respect the following folder structure:
-
-```
-/
-├── .htaccess
-├── public/
-│   └── index.php       # Single entry point (Front Controller)
-└── src/
-    ├── Controllers/    # Contains controller classes
-    │   ├── HomeController.php
-    │   └── UserController.php
-    └── Core/
-        └── Router.php      # Main router class
-```
-
-### The .htaccess file
-
-The `.htaccess` file at the root of the project is crucial. It redirects all requests to the application's entry point, `public/index.php`.
-
-```apache
-RewriteEngine On
-
-# redirect everything to index.php
-RewriteRule ^(.*)$ public/index.php?url=$1 [L,QSA]
-```
-
-- `RewriteEngine On`: Enables Apache's URL rewriting engine.
-- `RewriteRule ^(.*)$ public/index.php?url=$1 [L,QSA]`:
-  - `^(.*)$`: Captures everything in the URL after the domain name.
-  - `public/index.php?url=$1`: Rewrites the request to `public/index.php`, passing the captured URL as a `url` parameter in the query string.
-  - `[L]`: Indicates that this is the last rule to apply.
-  - `[QSA]` (Query String Append): Ensures that other parameters from the original query string are preserved.
-
-## Installation and Usage
-
-1.  Clone the project repository (replace the URL with your Git repository's URL):
-
-    ```bash
-    git clone https://github.com/KevinUrbain/Custom-built-dynamic-routing-system-in-an-MVC-PHP-framework.git
-    ```
-
-2.  Place the files on your web server (WAMP, MAMP, XAMPP, etc.). Make sure your Virtual Host's `DocumentRoot` points to the `public/` directory. If you place the project in a subdirectory (e.g., `http://localhost/Router/`), the `.htaccess` will work as is.
-
-3.  Navigate to the following URLs to test:
-    - `http://localhost/Router/` -> Calls `HomeController->index()`
-    - `http://localhost/Router/user` -> Calls `UserController->index()`
-    - `http://localhost/Router/user/add` -> Calls `UserController->add()`
-    - `http://localhost/Router/user/findById/123` -> Calls `UserController->findById('123')`
-    - `http://localhost/Router/user/test/val1/val2/val3` -> Calls `UserController->test('val1', 'val2', 'val3')`
-
-### Creating a new route
-
-To add a new page, for example `/product/show/42`:
-
-1.  Create a new controller file `src/Controllers/ProductController.php`.
-2.  In this file, create the `ProductController` class with a public `show($id)` method.
-
-```php
-<?php
-
-class ProductController
-{
-    public function show($id)
-    {
-        echo "Displaying product with ID: {$id}";
-    }
-}
-```
-
-That's it! The router will handle the rest.
-
-⚠️ No autoloader is implemented, which is why you don't see namespaces or the inclusion of an autoload.php file (please use Composer for this).
-#   C u s t o m - b u i l t - d y n a m i c - r o u t i n g - s y s t e m - i n - a n - M V C - P H P - f r a m e w o r k  
- 
