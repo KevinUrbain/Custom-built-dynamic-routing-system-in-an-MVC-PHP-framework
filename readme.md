@@ -1,5 +1,3 @@
---
-
 # PHP Router From Scratch
 
 This project is a simple and lightweight PHP router, designed to illustrate the basics of the "Front Controller" pattern and object-oriented PHP routing.
