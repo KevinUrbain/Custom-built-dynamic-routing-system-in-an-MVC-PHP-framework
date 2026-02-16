@@ -1,0 +1,4 @@
+RewriteEngine On
+
+# on redirige tout vers index.php
+RewriteRule ^(.*)$ public/index.php?url=$1 [L,QSA]
